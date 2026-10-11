@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My ASM Code</title>
+</head>
+<body>
+    <header class="hero">
+        <h1 class="page-title">My ASM Code</h1>
+        <p class="page-description">This is where I put my fx 580 VN X Assembly code.</p>
+    </header>
+
+    
+    <main>
+        
+        <section class="code-card">
+            <div class="code-header">
+                <h2>Print Lines</h2>
+                <button class="copy-btn" onclick="copyCode(this)">
+                    📋 Copy
+                </button>
+            </div>
+
+            <p>Uses the <code>printline</code> function. You can remove lines if you don't want them.</p>
+
+            <pre><code>org 0xe9e0
+
+setup:
+    setlr
+    setsfr
+    buffer_clear
+
+text:
+    xr0 = 0x3001, adr_of msg1
+    printline
+
+    xr0 = 0x3011, adr_of msg2
+    printline
+
+    xr0 = 0x3021, adr_of msg3
+    printline
+
+    xr0 = 0x3031, adr_of msg4
+    printline
+
+    render.ddd4
+
+msg1:
+    str "~~~~~Line~1~~~~~~"
+    hex 00
+
+msg2:
+    str "~~~~~Line~2~~~~~~"
+    hex 00
+
+msg3:
+    str "~~~~~Line~3~~~~~~"
+    hex 00
+
+msg4:
+    str "~~~~~Line~4~~~~~~"
+    hex 00
+            </code></pre>
+        </section>
+    </main>
+
+    
+    <script>
+    async function copyCode(button) {
+        const code = button
+            .closest('.code-card')
+            .querySelector('pre code')
+            .innerText;
+
+        try {
+            await navigator.clipboard.writeText(code);
+
+            button.textContent = '✓ Copied!';
+
+            setTimeout(() => {
+                button.textContent = '📋 Copy';
+            }, 1500);
+        } catch (error) {
+            alert('Could not copy code. Please check clipboard permissions.');
+        }
+    }
+    </script>
+</body>
+</html>
